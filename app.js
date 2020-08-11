@@ -12,16 +12,11 @@ const visitorSchema = new mongoose.Schema({
 });
 const Visitor = mongoose.model('Visitor', visitorSchema);
 app.get('/', (req, res) => { 
-	let name = req.query.name;
-	if(name === undefined){
-		name = "Anónimo";
-	}
-	const person = new Visitor({		
-		name: name
-	});
+	const name = req.query.name || "Anónimo";
+
+	const person = new Visitor({ name });
 	person.save(function(error){
 		console.log(error);
-		return error;
 	});
 	res.send('<h1>El visitante fue almacenado con éxito</h1>');
 });
