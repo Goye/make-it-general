@@ -1,23 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require("./user");
+const routes = require('./routes');
+const bodyParser = require('body-parser');
+
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/usuarios', { 
+  useNewUrlParser: true, 
+  useUnifiedTopology: true 
+});
+
+mongoose.connection.on("error", function(e) { console.error(e); });
+
 const app = express();
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/visitantes', {
-    useNewUrlParser: true,	
-    useUnifiedTopology: true
-});
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/', routes);
 
-const visitorSchema = new mongoose.Schema({
-  date: { type: Date, default: Date.now },
-  name: String
-});
-const Visitor = mongoose.model('Visitor', visitorSchema);
-app.get('/', (req, res) => { 
-	const name = req.query.name || "Anónimo";
-
-	const person = new Visitor({ name });
-	person.save(function(error){
-		console.log(error);
-	});
-	res.send('<h1>El visitante fue almacenado con éxito</h1>');
-});
 app.listen(3000, () => console.log('Listening on port 3000!'));
