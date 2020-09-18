@@ -1,20 +1,17 @@
 extends layout
 
 block content
-  if loggedIn 
-    a(href="/logout") Logout
-    
-    div
-      table(style='width:50%', border='1px solid black')
-        thead
+  a(href="/register") Registrarse
+  
+  div
+    table(style='width:50%', border='1px solid black')
+      thead
+        tr
+          th Name
+          th Email
+      tbody 
+        each user in users
           tr
-            th Name
-            th Email
-        tbody 
-          each user in users
-            tr
-              td #{user.name}
-              td #{user.email}  
-  else 
-    a(href="/register") Registrarse
-    a(href="/login") Login
+            td #{user.name}
+            td #{user.email}  
+
