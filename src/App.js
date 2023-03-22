@@ -1,19 +1,19 @@
+import logo from "./logo.svg";
+import CounterProvider from "./providers/CounterContext";
 import Counter from "./components/Counter";
+import Button from "./components/Button";
 import "./App.css";
-
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
-library.add(faPlus, faMinus);
 
 function App() {
   return (
-    <div className="App-container">
-      <Counter
-        min={1}
-        max={10}
-        increment={{ size: "large" }}
-        count={{ style: { fontWeight: "bold", padding: 26, fontSize: 26 } }}
-      />
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <CounterProvider>
+          <Counter />
+          <Button />
+        </CounterProvider>
+      </header>
     </div>
   );
 }
